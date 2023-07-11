@@ -68,6 +68,10 @@ class Book extends StatelessWidget {
                                   Room.routeName,
                                   arguments: {
                                     'room_id': snapshot.data![index]['room_id'],
+                                    'price': double.parse(
+                                      snapshot.data![index]['price'].toString(),
+                                    ),
+                                    'room': snapshot.data![index]['room'],
                                   },
                                 );
                               },

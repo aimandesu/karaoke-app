@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:karoake_app/providers/login_sign_provider.dart';
+import 'package:karoake_app/reservation/reservation.dart';
 import 'package:provider/provider.dart';
 
 import '../about/about.dart';
@@ -87,6 +88,12 @@ class Home extends StatelessWidget {
                               Book.routeName,
                             ),
                             child: const Text("Book now"),
+                          ),
+                          ElevatedButton(
+                            onPressed: () => Navigator.of(context).pushNamed(
+                              Reservation.routeName,
+                            ),
+                            child: const Text("Reservation"),
                           ),
                           ElevatedButton(
                             onPressed: () => Navigator.of(context).pushNamed(

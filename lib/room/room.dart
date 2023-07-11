@@ -5,9 +5,172 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:karoake_app/providers/book_provider.dart';
 import 'package:provider/provider.dart';
 
-class Room extends StatelessWidget {
+class Room extends StatefulWidget {
   static const routeName = "/room";
   const Room({super.key});
+
+  @override
+  State<Room> createState() => _RoomState();
+}
+
+class _RoomState extends State<Room> {
+  // String? _roomType;
+  final paxController = TextEditingController();
+
+  @override
+  void dispose() {
+    paxController.dispose();
+    super.dispose();
+  }
+
+  void clearAddReservation() {
+    paxController.clear();
+    // setState(() {
+    //   _roomType = null;
+    // });
+  }
+
+  void show(String pax, String reservationID, String roomID, double price,
+      String room, String time) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Reservation"),
+            content: Text(
+              "Reserve this slot?",
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: const Text("cancel"),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: const Text("proceed"),
+              ),
+            ],
+          );
+        }).then((value) {
+      if (value == true) {
+        Provider.of<BookProvider>(context, listen: false).addReservation(
+          pax,
+          reservationID,
+          roomID,
+          price,
+          room,
+          time,
+        );
+        // print(paxController);
+
+        // print(reservationID);
+        // print(roomID);
+        // print(price);
+      } else {
+        Fluttertoast.showToast(
+          msg: "reservation is cancelled",
+          toastLength: Toast.LENGTH_SHORT, // or Toast.LENGTH_LONG
+          gravity: ToastGravity.BOTTOM, // positioning of the toast
+          timeInSecForIosWeb: 1, // duration of the toast on iOS and web
+          backgroundColor: Colors.black, // background color of the toast
+          textColor: Colors.white, // text color of the toast
+          fontSize: 16.0, // font size of the toast message
+        );
+      }
+    });
+  }
+
+  void _launch(
+    BuildContext buildContext,
+    String reservationID,
+    String roomID,
+    double price,
+    String room,
+    String time,
+  ) {
+    showDialog(
+      context: buildContext,
+      builder: (_) {
+        return Dialog(
+          shadowColor: Colors.black,
+          elevation: 30,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(25)),
+          ),
+          child: Container(
+            margin: const EdgeInsets.symmetric(
+              vertical: 10,
+            ),
+            height: 150,
+            child: Column(
+              children: [
+                Pax(paxController: paxController),
+                // Container(
+                //   margin:
+                //       const EdgeInsets.only(bottom: 30, left: 15, right: 15),
+                //   padding: const EdgeInsets.all(10),
+                //   decoration: BoxDecoration(
+                //     border: Border.all(
+                //       color: Colors.purple,
+                //     ),
+                //     borderRadius: const BorderRadius.all(
+                //       Radius.circular(25),
+                //     ),
+                //   ),
+                //   child: StatefulBuilder(
+                //     builder: (context, setState) {
+                //       return DropdownButton(
+                //         borderRadius: BorderRadius.circular(20),
+                //         underline: const SizedBox(),
+                //         hint: const Text("Room Type"),
+                //         value: _roomType,
+                //         isExpanded: true,
+                //         items: ['Regular Room', 'Vip Room'].map((String value) {
+                //           return DropdownMenuItem(
+                //               value: value, child: Text(value));
+                //         }).toList(),
+                //         onChanged: (String? value) {
+                //           setState(() {
+                //             _roomType = value;
+                //           });
+                //         },
+                //       );
+                //     },
+                //   ),
+                // ),
+                ElevatedButton(
+                  onPressed: () {
+                    try {
+                      Navigator.of(context).pop();
+                      show(paxController.text, reservationID, roomID, price,
+                          room, time);
+
+                      // print(paxController.text);
+                      // // print(_roomType);
+                      // print(reservationID);
+                      // print(roomID);
+                      // print(price);
+                    } catch (e) {
+                      print(e.toString());
+                    } finally {
+                      clearAddReservation();
+                    }
+                  },
+                  child: const Text("Reserve"),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  // void dropDownCallback(String? selectedValue) {
+  //   setState(() {
+  //     _roomType = selectedValue;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +180,11 @@ class Room extends StatelessWidget {
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
     final String roomID = arguments['room_id'] as String;
+    final double price = arguments['price'] as double;
+    final String room = arguments['room'] as String;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -70,7 +236,7 @@ class Room extends StatelessWidget {
                                     if (snapshot.data![index]['available'] ==
                                         false) {
                                       Fluttertoast.showToast(
-                                        msg: " Reservation is full..",
+                                        msg: "The slot has been reserved..",
                                         toastLength: Toast
                                             .LENGTH_SHORT, // or Toast.LENGTH_LONG
                                         gravity: ToastGravity
@@ -85,7 +251,16 @@ class Room extends StatelessWidget {
                                             16.0, // font size of the toast message
                                       );
                                     } else {
-                                      print("something");
+                                      _launch(
+                                        context,
+                                        snapshot.data![index]['id'].toString(),
+                                        snapshot.data![index]['room_id']
+                                            .toString(),
+                                        price,
+                                        room,
+                                        snapshot.data![index]['time']
+                                            .toString(),
+                                      );
                                     }
                                   },
                                   leading:
@@ -138,6 +313,38 @@ class Room extends StatelessWidget {
                   );
                 }
               }),
+        ),
+      ),
+    );
+  }
+}
+
+class Pax extends StatelessWidget {
+  const Pax({
+    super.key,
+    required this.paxController,
+  });
+
+  final TextEditingController paxController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 30, left: 15, right: 15),
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.purple,
+        ),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(25),
+        ),
+      ),
+      child: TextFormField(
+        controller: paxController,
+        decoration: const InputDecoration.collapsed(
+          hintStyle: TextStyle(),
+          hintText: "Pax Version",
         ),
       ),
     );

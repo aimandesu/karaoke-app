@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:karoake_app/about/about.dart';
 import 'package:karoake_app/providers/book_provider.dart';
+import 'package:karoake_app/reservation/reservation.dart';
 import 'package:karoake_app/room/room.dart';
 import 'package:provider/provider.dart';
 
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
           Book.routeName: (context) => const Book(),
           About.routeName: (context) => const About(),
           Room.routeName: (context) => const Room(),
+          Reservation.routeName: (context) => const Reservation(),
         },
       ),
     );
