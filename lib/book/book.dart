@@ -64,6 +64,10 @@ class Book extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return InkWell(
                               onTap: () {
+                                print(snapshot.data![index]['room_id']);
+                                print(
+                                    snapshot.data![index]['price'].toString());
+                                print(snapshot.data![index]['room']);
                                 Navigator.of(context).pushNamed(
                                   Room.routeName,
                                   arguments: {

@@ -223,7 +223,18 @@ class _ReservationState extends State<Reservation> {
                                   Column(
                                     children: [
                                       IconButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          Provider.of<BookProvider>(context,
+                                                  listen: false)
+                                              .deleteOrder(
+                                            snapshot.data![index]['room_id']
+                                                .toString(),
+                                            snapshot.data![index]
+                                                ['reservation_id'],
+                                            snapshot.data![index]
+                                                ['reserved_id'],
+                                          );
+                                        },
                                         icon: const Icon(
                                           Icons.delete,
                                         ),

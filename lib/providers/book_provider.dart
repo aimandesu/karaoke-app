@@ -101,10 +101,10 @@ class BookProvider with ChangeNotifier {
     print(id);
 
     if (id != "") {
-      print(roomID);
-      print(currentReservationID);
-      print(reservedID);
-      print(time);
+      // print(roomID);
+      // print(currentReservationID);
+      // print(reservedID);
+      // print(time);
 
       await FirebaseFirestore.instance
           .collection("room")
@@ -132,6 +132,30 @@ class BookProvider with ChangeNotifier {
           .update({
         'time': time,
       });
+    }
+  }
+
+  Future<void> deleteOrder(
+    String roomID,
+    String currentReservationID,
+    String reservedID,
+  ) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection("room")
+          .doc(roomID)
+          .collection("reservation")
+          .doc(currentReservationID)
+          .update({
+        'available': true,
+        'user_uid': "",
+      });
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      final item =
+          FirebaseFirestore.instance.collection("reserved").doc(reservedID);
+      await item.delete();
     }
   }
 }
