@@ -3,9 +3,108 @@ import 'package:provider/provider.dart';
 
 import '../providers/book_provider.dart';
 
-class Reservation extends StatelessWidget {
+class Reservation extends StatefulWidget {
   static const routeName = "/reservation";
   const Reservation({super.key});
+
+  @override
+  State<Reservation> createState() => _ReservationState();
+}
+
+class _ReservationState extends State<Reservation> {
+  String? _time;
+
+  void _launch(
+    BuildContext buildContext,
+    String roomID,
+    List<String> list,
+    String currentReservationID,
+    String reservedID,
+  ) {
+    showDialog(
+      context: buildContext,
+      builder: (_) {
+        return Dialog(
+          shadowColor: Colors.black,
+          elevation: 30,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(25)),
+          ),
+          child: Container(
+            margin: const EdgeInsets.symmetric(
+              vertical: 10,
+            ),
+            height: 150,
+            child: Column(
+              children: [
+                Container(
+                  margin:
+                      const EdgeInsets.only(bottom: 30, left: 15, right: 15),
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.purple,
+                    ),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(25),
+                    ),
+                  ),
+                  child: StatefulBuilder(
+                    builder: (context, setState) {
+                      return DropdownButton(
+                        borderRadius: BorderRadius.circular(20),
+                        underline: const SizedBox(),
+                        hint: const Text("Room Type"),
+                        value: _time,
+                        isExpanded: true,
+                        items: list.map((String value) {
+                          return DropdownMenuItem(
+                              value: value, child: Text(value));
+                        }).toList(),
+                        onChanged: (String? value) {
+                          setState(() {
+                            _time = value;
+                          });
+                        },
+                      );
+                    },
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    try {
+                      Navigator.of(context).pop();
+                      // print(_time);
+                      Provider.of<BookProvider>(context, listen: false)
+                          .updateReservation(
+                        roomID,
+                        _time.toString(),
+                        currentReservationID,
+                        reservedID,
+                      );
+                      // print(paxController.text);
+                      // // print(_roomType);
+                      // print(reservationID);
+                      // print(roomID);
+                      // print(price);
+                    } catch (e) {
+                      print(e.toString());
+                    } finally {
+                      // clearAddReservation();
+                      setState(() {
+                        _time = null;
+                      });
+                    }
+                  },
+                  child: const Text("Reserve"),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,20 +223,33 @@ class Reservation extends StatelessWidget {
                                   Column(
                                     children: [
                                       IconButton(
-                                        onPressed: () {
-                                          Provider.of<BookProvider>(context,
-                                                  listen: false)
-                                              .fetchAvailability(
-                                            snapshot.data![index]['room_id']
-                                                .toString(),
-                                          );
-                                        },
+                                        onPressed: () {},
                                         icon: const Icon(
                                           Icons.delete,
                                         ),
                                       ),
                                       IconButton(
-                                        onPressed: () {},
+                                        onPressed: () async {
+                                          List<String> list = [];
+
+                                          list =
+                                              await Provider.of<BookProvider>(
+                                                      context,
+                                                      listen: false)
+                                                  .fetchAvailability(
+                                            snapshot.data![index]['room_id']
+                                                .toString(),
+                                          );
+                                          _launch(
+                                              context,
+                                              snapshot.data![index]['room_id']
+                                                  .toString(),
+                                              list,
+                                              snapshot.data![index]
+                                                  ['reservation_id'],
+                                              snapshot.data![index]
+                                                  ['reserved_id']);
+                                        },
                                         icon: const Icon(
                                           Icons.update,
                                         ),

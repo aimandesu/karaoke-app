@@ -73,9 +73,65 @@ class BookProvider with ChangeNotifier {
         list.add(element.data()['time']);
       }
     });
-    for (var e in list) {
-      print(e);
-    }
+    // for (var e in list) {
+    //   print(e);
+    // }
     return list;
+  }
+
+  Future<void> updateReservation(
+    String roomID,
+    String time,
+    String currentReservationID,
+    String reservedID,
+  ) async {
+    String id = "";
+    await FirebaseFirestore.instance
+        .collection("room")
+        .doc(roomID)
+        .collection("reservation")
+        .where("time", isEqualTo: time)
+        .where("available", isEqualTo: true)
+        .get()
+        .then((value) {
+      for (var element in value.docs) {
+        id = element.data()['id'];
+      }
+    });
+    print(id);
+
+    if (id != "") {
+      print(roomID);
+      print(currentReservationID);
+      print(reservedID);
+      print(time);
+
+      await FirebaseFirestore.instance
+          .collection("room")
+          .doc(roomID)
+          .collection("reservation")
+          .doc(id)
+          .update({
+        'available': false,
+        'user_uid': FirebaseAuth.instance.currentUser!.uid,
+      });
+
+      await FirebaseFirestore.instance
+          .collection("room")
+          .doc(roomID)
+          .collection("reservation")
+          .doc(currentReservationID)
+          .update({
+        'available': true,
+        'user_uid': "",
+      });
+
+      await FirebaseFirestore.instance
+          .collection("reserved")
+          .doc(reservedID)
+          .update({
+        'time': time,
+      });
+    }
   }
 }
