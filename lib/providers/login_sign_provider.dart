@@ -44,6 +44,8 @@ class LoginSignProvider with ChangeNotifier {
     String username,
     String email,
     String password,
+    String phoneNo,
+    DateTime birthDate,
     BuildContext context,
   ) async {
     UserCredential userCredential;
@@ -61,6 +63,8 @@ class LoginSignProvider with ChangeNotifier {
         email: email,
         password: password,
         uid: userCredential.user!.uid,
+        phoneNo: phoneNo,
+        birthDate: birthDate,
       );
       final json = user.toJson();
       await userSignUp.set(json);

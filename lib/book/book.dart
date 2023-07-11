@@ -15,7 +15,6 @@ class Book extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -34,164 +33,167 @@ class Book extends StatelessWidget {
             tileMode: TileMode.mirror,
           ),
         ),
-        child: FutureBuilder(
-            future: Provider.of<BookProvider>(context, listen: false)
-                .fetchReservation(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData && snapshot.data!.isEmpty) {
-                return Text("no");
-              } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                return Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      height: size.height * 0.1,
-                      width: size.width * 1,
-                      child: const Text(
-                        "List Rooms",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 30,
-                          color: Colors.white,
+        child: SafeArea(
+          child: FutureBuilder(
+              future: Provider.of<BookProvider>(context, listen: false)
+                  .fetchReservation(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData && snapshot.data!.isEmpty) {
+                  return Text("no");
+                } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                  return Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        height: size.height * 0.1,
+                        width: size.width * 1,
+                        child: const Text(
+                          "List Rooms",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 30,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: size.height * 0.7,
-                      width: size.width * 1,
-                      child: ListView.builder(
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {
-                              Navigator.of(context).pushNamed(
-                                Room.routeName,
-                                arguments: {
-                                  'room_id': snapshot.data![index]['room_id'],
-                                },
-                              );
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.all(10),
-                              padding: const EdgeInsets.all(10),
-                              width: size.width * 1,
-                              height: 120,
-                              decoration: BoxDecoration(
-                                // color: Colors.amberAccent,
-                                borderRadius: BorderRadius.circular(25),
-                                border: Border.all(
-                                  // color: Colors.blue,
-                                  width: 1,
-                                ),
-                                color: Colors.white,
-                              ),
-                              child: Row(
-                                children: [
-                                  Image.network(
-                                    'https://cdn.donmai.us/original/b9/0e/b90e0dc77ade614dbebbc274cb88d2bc.jpg',
-                                    width: size.width * 0.2,
-                                    height: 95,
-                                    // height: 350.0,
-                                    fit: BoxFit.cover,
+                      SizedBox(
+                        height: size.height * 0.7,
+                        width: size.width * 1,
+                        child: ListView.builder(
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                Navigator.of(context).pushNamed(
+                                  Room.routeName,
+                                  arguments: {
+                                    'room_id': snapshot.data![index]['room_id'],
+                                  },
+                                );
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(10),
+                                width: size.width * 1,
+                                height: 120,
+                                decoration: BoxDecoration(
+                                  // color: Colors.amberAccent,
+                                  borderRadius: BorderRadius.circular(25),
+                                  border: Border.all(
+                                    // color: Colors.blue,
+                                    width: 1,
                                   ),
-                                  Container(
-                                    width: size.width * 0.6,
-                                    margin: EdgeInsets.only(left: 10),
-                                    // height: 30,
-                                    child: GridView.count(
-                                      crossAxisCount: 2,
-                                      // mainAxisSpacing: 10,
-                                      childAspectRatio: 2.5 / 1,
-                                      mainAxisSpacing: 3,
-                                      crossAxisSpacing: 3,
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.deepPurple,
-
-                                            borderRadius: BorderRadius.circular(
-                                                50.0), // Set the circular border
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              snapshot.data![index]['room']
-                                                  .toString(),
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.deepPurple,
-                                            borderRadius: BorderRadius.circular(
-                                                50.0), // Set the circular border
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              snapshot.data![index]['capacity']
-                                                  .toString(),
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.deepPurple,
-
-                                            borderRadius: BorderRadius.circular(
-                                                50.0), // Set the circular border
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              snapshot.data![index]['price']
-                                                  .toString(),
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.deepPurple,
-
-                                            borderRadius: BorderRadius.circular(
-                                                50.0), // Set the circular border
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              snapshot.data![index]['type']
-                                                  .toString(),
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                                  color: Colors.white,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Image.network(
+                                      'https://cdn.donmai.us/original/b9/0e/b90e0dc77ade614dbebbc274cb88d2bc.jpg',
+                                      width: size.width * 0.2,
+                                      height: 95,
+                                      // height: 350.0,
+                                      fit: BoxFit.cover,
                                     ),
-                                  )
-                                ],
+                                    Container(
+                                      width: size.width * 0.6,
+                                      margin: EdgeInsets.only(left: 10),
+                                      // height: 30,
+                                      child: GridView.count(
+                                        crossAxisCount: 2,
+                                        // mainAxisSpacing: 10,
+                                        childAspectRatio: 2.5 / 1,
+                                        mainAxisSpacing: 3,
+                                        crossAxisSpacing: 3,
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.deepPurple,
+
+                                              borderRadius: BorderRadius.circular(
+                                                  50.0), // Set the circular border
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                snapshot.data![index]['room']
+                                                    .toString(),
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.deepPurple,
+                                              borderRadius: BorderRadius.circular(
+                                                  50.0), // Set the circular border
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                snapshot.data![index]
+                                                        ['capacity']
+                                                    .toString(),
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.deepPurple,
+
+                                              borderRadius: BorderRadius.circular(
+                                                  50.0), // Set the circular border
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                snapshot.data![index]['price']
+                                                    .toString(),
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.deepPurple,
+
+                                              borderRadius: BorderRadius.circular(
+                                                  50.0), // Set the circular border
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                snapshot.data![index]['type']
+                                                    .toString(),
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                  ],
-                );
-              } else {
-                return Container();
-              }
-            }),
+                    ],
+                  );
+                } else {
+                  return Container();
+                }
+              }),
+        ),
       ),
     );
   }

@@ -32,76 +32,78 @@ class Home extends StatelessWidget {
             tileMode: TileMode.mirror,
           ),
         ),
-        child: FutureBuilder<String>(
-          future: Provider.of<LoginSignProvider>(context, listen: false)
-              .fetchUser(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData && snapshot.data!.isEmpty) {
-              return const Text("no");
-            } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(
-                        50.0), // Adjust the value to change the roundness
-                    child: Image.network(
-                      'https://cdn.donmai.us/original/b9/0e/b90e0dc77ade614dbebbc274cb88d2bc.jpg',
-                      width: size.width * 0.9,
-                      height: 350.0,
-                      fit: BoxFit.cover,
+        child: SafeArea(
+          child: FutureBuilder<String>(
+            future: Provider.of<LoginSignProvider>(context, listen: false)
+                .fetchUser(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData && snapshot.data!.isEmpty) {
+                return const Text("no");
+              } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(
+                          50.0), // Adjust the value to change the roundness
+                      child: Image.network(
+                        'https://cdn.donmai.us/original/b9/0e/b90e0dc77ade614dbebbc274cb88d2bc.jpg',
+                        width: size.width * 0.9,
+                        height: 350.0,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        "Welcome ${snapshot.data!}",
-                        style: const TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      SizedBox(
-                        height: size.height * 0.02,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          "we are open weekly except friday from 10am to 10pm. We are waiting you there ;)",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    width: size.width * 1,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    Column(
                       children: [
-                        ElevatedButton(
-                          onPressed: () => Navigator.of(context).pushNamed(
-                            Book.routeName,
+                        Text(
+                          "Welcome ${snapshot.data!}",
+                          style: const TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.w400,
                           ),
-                          child: const Text("Book now"),
                         ),
-                        ElevatedButton(
-                          onPressed: () => Navigator.of(context).pushNamed(
-                            About.routeName,
+                        SizedBox(
+                          height: size.height * 0.02,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            "we are open weekly except friday from 10am to 10pm. We are waiting you there ;)",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
                           ),
-                          child: const Text("About Us"),
-                        )
+                        ),
                       ],
                     ),
-                  )
-                ],
-              );
-            } else {
-              return Container();
-            }
-          },
+                    SizedBox(
+                      width: size.width * 1,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () => Navigator.of(context).pushNamed(
+                              Book.routeName,
+                            ),
+                            child: const Text("Book now"),
+                          ),
+                          ElevatedButton(
+                            onPressed: () => Navigator.of(context).pushNamed(
+                              About.routeName,
+                            ),
+                            child: const Text("About Us"),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                );
+              } else {
+                return Container();
+              }
+            },
+          ),
         ),
       ),
     );

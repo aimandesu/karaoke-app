@@ -19,12 +19,30 @@ class _LoginSignState extends State<LoginSign> {
   final usernameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final phoneController = TextEditingController();
+  DateTime? selectedDate;
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
+  }
 
   @override
   void dispose() {
     usernameController.dispose();
     emailController.dispose();
     passwordController.dispose();
+
     super.dispose();
   }
 
@@ -45,9 +63,9 @@ class _LoginSignState extends State<LoginSign> {
                 height: (mediaQuery.size.height - paddingTop) * 0.1,
                 child: const Center(
                   child: Text(
-                    "Thor Coffee and Donut",
+                    "Let's Karaoke",
                     style: TextStyle(
-                      color: Colors.brown,
+                      color: Colors.deepPurple,
                       fontWeight: FontWeight.bold,
                       fontStyle: FontStyle.italic,
                       fontSize: 30,
@@ -58,7 +76,7 @@ class _LoginSignState extends State<LoginSign> {
               SizedBox(
                 height: (mediaQuery.size.height - paddingTop) * 0.3,
                 child: Lottie.network(
-                    "https://assets9.lottiefiles.com/packages/lf20_nwBuryPjwH.json"),
+                    "https://assets9.lottiefiles.com/packages/lf20_fu7adquq.json"),
               ),
               SizedBox(
                 // height: (mediaQuery.size.height - paddingTop) * 0.5,
@@ -75,6 +93,30 @@ class _LoginSignState extends State<LoginSign> {
                       passwordVisibility: passwordVisibility,
                     ),
                     isDisplayLogin
+                        ? Container()
+                        : PhoneNo(phoneController: phoneController),
+                    isDisplayLogin
+                        ? Container()
+                        : Container(
+                            margin: EdgeInsets.only(bottom: 30),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () => _selectDate(context),
+                                  child: const Text("Birth year"),
+                                ),
+                                selectedDate != null
+                                    ? Text(
+                                        selectedDate.toString().split(' ')[0])
+                                    : Text(
+                                        'Birth year not selected',
+                                        style: TextStyle(fontSize: 15.0),
+                                      ),
+                              ],
+                            ),
+                          ),
+                    isDisplayLogin
                         ? LoginButtonWidget(
                             mediaQuery: mediaQuery,
                             passwordController: passwordController,
@@ -85,6 +127,10 @@ class _LoginSignState extends State<LoginSign> {
                             emailController: emailController,
                             passwordController: passwordController,
                             usernameController: usernameController,
+                            phoneController: phoneController,
+                            birthDate: selectedDate == null
+                                ? DateTime.now()
+                                : selectedDate as DateTime,
                           ),
                     // Container(
                     //   child: isDisplayLogin
@@ -143,12 +189,16 @@ class SignButtonWidget extends StatelessWidget {
     required this.emailController,
     required this.passwordController,
     required this.usernameController,
+    required this.phoneController,
+    required this.birthDate,
   });
 
   final MediaQueryData mediaQuery;
   final TextEditingController emailController;
   final TextEditingController usernameController;
   final TextEditingController passwordController;
+  final TextEditingController phoneController;
+  final DateTime birthDate;
 
   @override
   Widget build(BuildContext context) {
@@ -160,12 +210,12 @@ class SignButtonWidget extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 30, left: 15, right: 15),
       decoration: BoxDecoration(
         border: Border.all(
-          color: Colors.brown,
+          color: Colors.deepPurple,
         ),
         borderRadius: const BorderRadius.all(
           Radius.circular(25),
         ),
-        color: Colors.brown,
+        color: Colors.deepPurple,
       ),
       child: TextButton(
         onPressed: () {
@@ -173,6 +223,8 @@ class SignButtonWidget extends StatelessWidget {
             usernameController.text,
             emailController.text,
             passwordController.text,
+            phoneController.text,
+            birthDate,
             context,
           );
         },
@@ -207,12 +259,12 @@ class LoginButtonWidget extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 30, left: 15, right: 15),
       decoration: BoxDecoration(
         border: Border.all(
-          color: Colors.brown,
+          color: Colors.deepPurple,
         ),
         borderRadius: const BorderRadius.all(
           Radius.circular(25),
         ),
-        color: Colors.brown,
+        color: Colors.deepPurple,
       ),
       child: TextButton(
         onPressed: () {
@@ -260,7 +312,7 @@ class _PasswordWidgetState extends State<PasswordWidget> {
       // width: mediaQuery.size.width * 1,
       decoration: BoxDecoration(
         border: Border.all(
-          color: Colors.brown,
+          color: Colors.deepPurple,
         ),
         borderRadius: const BorderRadius.all(
           Radius.circular(25),
@@ -312,7 +364,7 @@ class UsernameWidget extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         border: Border.all(
-          color: Colors.brown,
+          color: Colors.deepPurple,
         ),
         borderRadius: const BorderRadius.all(
           Radius.circular(25),
@@ -344,7 +396,7 @@ class EmailWidget extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         border: Border.all(
-          color: Colors.brown,
+          color: Colors.deepPurple,
         ),
         borderRadius: const BorderRadius.all(
           Radius.circular(25),
@@ -355,6 +407,39 @@ class EmailWidget extends StatelessWidget {
         decoration: const InputDecoration.collapsed(
           hintStyle: TextStyle(),
           hintText: "Email",
+        ),
+      ),
+    );
+  }
+}
+
+class PhoneNo extends StatelessWidget {
+  const PhoneNo({
+    super.key,
+    required this.phoneController,
+  });
+
+  final TextEditingController phoneController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 30, left: 15, right: 15),
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.deepPurple,
+        ),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(25),
+        ),
+      ),
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        controller: phoneController,
+        decoration: const InputDecoration.collapsed(
+          hintStyle: TextStyle(),
+          hintText: "Phone No",
         ),
       ),
     );
