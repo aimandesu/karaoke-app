@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "389082672866",
+    "project_id": "karaoke-app-79fc9",
+    "storage_bucket": "karaoke-app-79fc9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389082672866:android:48ecdc2275510eb4d278bb",
+        "android_client_info": {
+          "package_name": "com.example.karoake_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "389082672866-k3sqis9uu2tgtr10udjjoocl2ehocb5o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvM-G9L0Y8aWiRJHgqpkIR2IPBVgzcngQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "389082672866-k3sqis9uu2tgtr10udjjoocl2ehocb5o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
