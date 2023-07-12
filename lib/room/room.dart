@@ -53,10 +53,16 @@ class _RoomState extends State<Room> {
           );
         }).then((value) {
       if (value == true) {
+        // print(pax);
+        // print(reservationID);
+        // print(roomID);
+        // print(price);
+        // print(room);
+        // print(time);
         Provider.of<BookProvider>(context, listen: false).addReservation(
           pax,
           reservationID,
-          roomID,
+          roomID.trim(),
           price,
           room,
           time,
@@ -187,21 +193,22 @@ class _RoomState extends State<Room> {
       resizeToAvoidBottomInset: false,
       body: Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment(0.8, 1),
-            colors: <Color>[
-              Color(0xff1f005c),
-              Color(0xff5b0060),
-              Color(0xff870160),
-              Color(0xffac255e),
-              Color(0xffca485c),
-              Color(0xffe16b5c),
-              Color(0xfff39060),
-              Color(0xffffb56b),
-            ], // Gradient from https://learnui.design/tools/gradient-generator.html
-            tileMode: TileMode.mirror,
-          ),
+          color: Color(0xFF94618E),
+          // gradient: LinearGradient(
+          //   begin: Alignment.topLeft,
+          //   end: Alignment(0.8, 1),
+          //   colors: <Color>[
+          //     Color(0xff1f005c),
+          //     Color(0xff5b0060),
+          //     Color(0xff870160),
+          //     Color(0xffac255e),
+          //     Color(0xffca485c),
+          //     Color(0xffe16b5c),
+          //     Color(0xfff39060),
+          //     Color(0xffffb56b),
+          //   ], // Gradient from https://learnui.design/tools/gradient-generator.html
+          //   tileMode: TileMode.mirror,
+          // ),
         ),
         child: SafeArea(
           child: StreamBuilder<List<Map<String, dynamic>>>(
@@ -230,6 +237,7 @@ class _RoomState extends State<Room> {
                                 right: 10,
                               ),
                               child: Card(
+                                color: Color(0xFFF4DECB),
                                 elevation: 20,
                                 child: ListTile(
                                   onTap: () {

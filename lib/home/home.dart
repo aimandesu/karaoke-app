@@ -17,21 +17,22 @@ class Home extends StatelessWidget {
         height: size.height * 1,
         width: size.width * 1,
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment(0.8, 1),
-            colors: <Color>[
-              Color(0xff1f005c),
-              Color(0xff5b0060),
-              Color(0xff870160),
-              Color(0xffac255e),
-              Color(0xffca485c),
-              Color(0xffe16b5c),
-              Color(0xfff39060),
-              Color(0xffffb56b),
-            ], // Gradient from https://learnui.design/tools/gradient-generator.html
-            tileMode: TileMode.mirror,
-          ),
+          color: Color(0xFF94618E),
+          // gradient: LinearGradient(
+          //   begin: Alignment.topLeft,
+          //   end: Alignment(0.8, 1),
+          //   colors: <Color>[
+          //     Color(0xff1f005c),
+          //     Color(0xff5b0060),
+          //     Color(0xff870160),
+          //     Color(0xffac255e),
+          //     Color(0xffca485c),
+          //     Color(0xffe16b5c),
+          //     Color(0xfff39060),
+          //     Color(0xffffb56b),
+          //   ], // Gradient from https://learnui.design/tools/gradient-generator.html
+          //   tileMode: TileMode.mirror,
+          // ),
         ),
         child: SafeArea(
           child: FutureBuilder<String>(
@@ -61,6 +62,7 @@ class Home extends StatelessWidget {
                           style: const TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.w400,
+                            color: Colors.white,
                           ),
                         ),
                         SizedBox(
@@ -73,6 +75,7 @@ class Home extends StatelessWidget {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 20,
+                              color: Colors.white,
                             ),
                           ),
                         ),
@@ -84,23 +87,47 @@ class Home extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xFFF4DECB),
+                            ),
                             onPressed: () => Navigator.of(context).pushNamed(
                               Book.routeName,
                             ),
-                            child: const Text("Book now"),
+                            child: const Text(
+                              "Book now",
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
                           ),
                           ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xFFF4DECB),
+                            ),
                             onPressed: () => Navigator.of(context).pushNamed(
                               Reservation.routeName,
                             ),
-                            child: const Text("Reservation"),
-                          ),
-                          ElevatedButton(
-                            onPressed: () => Navigator.of(context).pushNamed(
-                              About.routeName,
+                            child: const Text(
+                              "Reservation",
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
                             ),
-                            child: const Text("About Us"),
-                          )
+                          ),
+                          // ElevatedButton(
+                          //   style: ElevatedButton.styleFrom(
+                          //     backgroundColor: Color(0xFFF4DECB),
+                          //   ),
+                          //   onPressed: () => Navigator.of(context).pushNamed(
+                          //     About.routeName,
+                          //   ),
+                          //   child: const Text(
+                          //     "About Us",
+                          //     style: TextStyle(
+                          //       color: Colors.black,
+                          //     ),
+                          //   ),
+                          // )
                         ],
                       ),
                     )

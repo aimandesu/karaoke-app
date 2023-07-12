@@ -17,21 +17,22 @@ class Book extends StatelessWidget {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment(0.8, 1),
-            colors: <Color>[
-              Color(0xff1f005c),
-              Color(0xff5b0060),
-              Color(0xff870160),
-              Color(0xffac255e),
-              Color(0xffca485c),
-              Color(0xffe16b5c),
-              Color(0xfff39060),
-              Color(0xffffb56b),
-            ], // Gradient from https://learnui.design/tools/gradient-generator.html
-            tileMode: TileMode.mirror,
-          ),
+          color: Color(0xFF94618E),
+          // gradient: LinearGradient(
+          //   begin: Alignment.topLeft,
+          //   end: Alignment(0.8, 1),
+          //   colors: <Color>[
+          //     Color(0xff1f005c),
+          //     Color(0xff5b0060),
+          //     Color(0xff870160),
+          //     Color(0xffac255e),
+          //     Color(0xffca485c),
+          //     Color(0xffe16b5c),
+          //     Color(0xfff39060),
+          //     Color(0xffffb56b),
+          //   ], // Gradient from https://learnui.design/tools/gradient-generator.html
+          //   tileMode: TileMode.mirror,
+          // ),
         ),
         child: SafeArea(
           child: FutureBuilder(
@@ -64,10 +65,10 @@ class Book extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return InkWell(
                               onTap: () {
-                                print(snapshot.data![index]['room_id']);
-                                print(
-                                    snapshot.data![index]['price'].toString());
-                                print(snapshot.data![index]['room']);
+                                // print(snapshot.data![index]['room_id']);
+                                // print(
+                                //     snapshot.data![index]['price'].toString());
+                                // print(snapshot.data![index]['room']);
                                 Navigator.of(context).pushNamed(
                                   Room.routeName,
                                   arguments: {
@@ -115,7 +116,7 @@ class Book extends StatelessWidget {
                                         children: [
                                           Container(
                                             decoration: BoxDecoration(
-                                              color: Colors.deepPurple,
+                                              color: Color(0xFFF4DECB),
 
                                               borderRadius: BorderRadius.circular(
                                                   50.0), // Set the circular border
@@ -125,15 +126,15 @@ class Book extends StatelessWidget {
                                                 snapshot.data![index]['room']
                                                     .toString(),
                                                 textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                ),
+                                                // style: TextStyle(
+                                                //   color: Colors.white,
+                                                // ),
                                               ),
                                             ),
                                           ),
                                           Container(
                                             decoration: BoxDecoration(
-                                              color: Colors.deepPurple,
+                                              color: Color(0xFFF4DECB),
                                               borderRadius: BorderRadius.circular(
                                                   50.0), // Set the circular border
                                             ),
@@ -143,15 +144,15 @@ class Book extends StatelessWidget {
                                                         ['capacity']
                                                     .toString(),
                                                 textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                ),
+                                                // style: TextStyle(
+                                                //   color: Colors.white,
+                                                // ),
                                               ),
                                             ),
                                           ),
                                           Container(
                                             decoration: BoxDecoration(
-                                              color: Colors.deepPurple,
+                                              color: Color(0xFFF4DECB),
 
                                               borderRadius: BorderRadius.circular(
                                                   50.0), // Set the circular border
@@ -161,15 +162,15 @@ class Book extends StatelessWidget {
                                                 snapshot.data![index]['price']
                                                     .toString(),
                                                 textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                ),
+                                                // style: TextStyle(
+                                                //   color: Colors.white,
+                                                // ),
                                               ),
                                             ),
                                           ),
                                           Container(
                                             decoration: BoxDecoration(
-                                              color: Colors.deepPurple,
+                                              color: Color(0xFFF4DECB),
 
                                               borderRadius: BorderRadius.circular(
                                                   50.0), // Set the circular border
@@ -179,9 +180,9 @@ class Book extends StatelessWidget {
                                                 snapshot.data![index]['type']
                                                     .toString(),
                                                 textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                ),
+                                                // style: TextStyle(
+                                                //   color: Colors.white,
+                                                // ),
                                               ),
                                             ),
                                           ),

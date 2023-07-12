@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/book_provider.dart';
@@ -54,7 +55,7 @@ class _ReservationState extends State<Reservation> {
                       return DropdownButton(
                         borderRadius: BorderRadius.circular(20),
                         underline: const SizedBox(),
-                        hint: const Text("Room Type"),
+                        hint: const Text("Time"),
                         value: _time,
                         isExpanded: true,
                         items: list.map((String value) {
@@ -77,7 +78,7 @@ class _ReservationState extends State<Reservation> {
                       // print(_time);
                       Provider.of<BookProvider>(context, listen: false)
                           .updateReservation(
-                        roomID,
+                        roomID.trim(),
                         _time.toString(),
                         currentReservationID,
                         reservedID,
@@ -96,7 +97,7 @@ class _ReservationState extends State<Reservation> {
                       });
                     }
                   },
-                  child: const Text("Reserve"),
+                  child: const Text("update"),
                 ),
               ],
             ),
@@ -113,21 +114,22 @@ class _ReservationState extends State<Reservation> {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment(0.8, 1),
-            colors: <Color>[
-              Color(0xff1f005c),
-              Color(0xff5b0060),
-              Color(0xff870160),
-              Color(0xffac255e),
-              Color(0xffca485c),
-              Color(0xffe16b5c),
-              Color(0xfff39060),
-              Color(0xffffb56b),
-            ], // Gradient from https://learnui.design/tools/gradient-generator.html
-            tileMode: TileMode.mirror,
-          ),
+          color: Color(0xFF94618E),
+          // gradient: LinearGradient(
+          //   begin: Alignment.topLeft,
+          //   end: Alignment(0.8, 1),
+          //   colors: <Color>[
+          //     Color(0xff1f005c),
+          //     Color(0xff5b0060),
+          //     Color(0xff870160),
+          //     Color(0xffac255e),
+          //     Color(0xffca485c),
+          //     Color(0xffe16b5c),
+          //     Color(0xfff39060),
+          //     Color(0xffffb56b),
+          //   ], // Gradient from https://learnui.design/tools/gradient-generator.html
+          //   tileMode: TileMode.mirror,
+          // ),
         ),
         child: SafeArea(
           child: StreamBuilder<List<Map<String, dynamic>>>(
@@ -176,13 +178,13 @@ class _ReservationState extends State<Reservation> {
                                     ),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(25.0),
-                                      color: Colors.deepPurple,
+                                      color: Color(0xFFF4DECB),
                                     ),
                                     child: Text(
                                       (index + 1).toString(),
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                      ),
+                                      // style: const TextStyle(
+                                      //   color: Colors.white,
+                                      // ),
                                     ),
                                   ),
                                   SizedBox(
@@ -279,9 +281,25 @@ class _ReservationState extends State<Reservation> {
                   child: CircularProgressIndicator(),
                 );
               } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
+                return Center(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Cart is empty",
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontStyle: FontStyle.italic,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Lottie.asset(
+                      'assets/lottie.json', // Replace with the correct path and filename
+                      // width: 200,
+                      // height: 200,
+                    ),
+                  ],
+                ));
               }
             },
           ),
