@@ -26,6 +26,7 @@ class BookProvider with ChangeNotifier {
     double price,
     String room,
     String time,
+    String facility,
   ) async {
     final addItem = FirebaseFirestore.instance.collection("reserved");
     addItem.add({
@@ -36,6 +37,7 @@ class BookProvider with ChangeNotifier {
       'user_uid': FirebaseAuth.instance.currentUser!.uid,
       'room': room,
       'time': time,
+      'facilities': facility,
     }).then((value) => addItem.doc(value.id).update({
           'reserved_id': value.id,
         }));

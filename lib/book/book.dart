@@ -84,7 +84,7 @@ class Book extends StatelessWidget {
                                 margin: const EdgeInsets.all(10),
                                 padding: const EdgeInsets.all(10),
                                 width: size.width * 1,
-                                height: 120,
+                                height: 250,
                                 decoration: BoxDecoration(
                                   // color: Colors.amberAccent,
                                   borderRadius: BorderRadius.circular(25),
@@ -97,20 +97,20 @@ class Book extends StatelessWidget {
                                 child: Row(
                                   children: [
                                     Image.network(
-                                      'https://cdn.donmai.us/original/b9/0e/b90e0dc77ade614dbebbc274cb88d2bc.jpg',
-                                      width: size.width * 0.2,
-                                      height: 95,
+                                      snapshot.data![index]['image'].toString(),
+                                      width: size.width * 0.36,
+                                      height: 200,
                                       // height: 350.0,
                                       fit: BoxFit.cover,
                                     ),
                                     Container(
-                                      width: size.width * 0.6,
+                                      width: size.width * 0.5,
                                       margin: EdgeInsets.only(left: 10),
                                       // height: 30,
                                       child: GridView.count(
                                         crossAxisCount: 2,
                                         // mainAxisSpacing: 10,
-                                        childAspectRatio: 2.5 / 1,
+                                        // childAspectRatio: 2.5 / 1,
                                         mainAxisSpacing: 3,
                                         crossAxisSpacing: 3,
                                         children: [

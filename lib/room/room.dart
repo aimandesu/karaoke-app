@@ -16,22 +16,32 @@ class Room extends StatefulWidget {
 class _RoomState extends State<Room> {
   // String? _roomType;
   final paxController = TextEditingController();
+  final facilityController = TextEditingController();
 
   @override
   void dispose() {
     paxController.dispose();
+    facilityController.dispose();
     super.dispose();
   }
 
   void clearAddReservation() {
     paxController.clear();
+    facilityController.clear();
     // setState(() {
     //   _roomType = null;
     // });
   }
 
-  void show(String pax, String reservationID, String roomID, double price,
-      String room, String time) {
+  void show(
+    String pax,
+    String reservationID,
+    String roomID,
+    double price,
+    String room,
+    String time,
+    String facility,
+  ) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -66,6 +76,7 @@ class _RoomState extends State<Room> {
           price,
           room,
           time,
+          facility,
         );
         // print(paxController);
 
@@ -107,10 +118,11 @@ class _RoomState extends State<Room> {
             margin: const EdgeInsets.symmetric(
               vertical: 10,
             ),
-            height: 150,
+            height: 250,
             child: Column(
               children: [
                 Pax(paxController: paxController),
+                Facility(facilityController: facilityController),
                 // Container(
                 //   margin:
                 //       const EdgeInsets.only(bottom: 30, left: 15, right: 15),
@@ -149,7 +161,7 @@ class _RoomState extends State<Room> {
                     try {
                       Navigator.of(context).pop();
                       show(paxController.text, reservationID, roomID, price,
-                          room, time);
+                          room, time, facilityController.text);
 
                       // print(paxController.text);
                       // // print(_roomType);
@@ -353,6 +365,38 @@ class Pax extends StatelessWidget {
         decoration: const InputDecoration.collapsed(
           hintStyle: TextStyle(),
           hintText: "Pax Version",
+        ),
+      ),
+    );
+  }
+}
+
+class Facility extends StatelessWidget {
+  const Facility({
+    super.key,
+    required this.facilityController,
+  });
+
+  final TextEditingController facilityController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 30, left: 15, right: 15),
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.purple,
+        ),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(25),
+        ),
+      ),
+      child: TextFormField(
+        controller: facilityController,
+        decoration: const InputDecoration.collapsed(
+          hintStyle: TextStyle(),
+          hintText: "Request Facility",
         ),
       ),
     );

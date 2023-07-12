@@ -328,11 +328,7 @@ class _ReservationState extends State<Reservation> {
                     ),
                   ],
                 );
-              } else if (snapshot.hasError) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else {
+              } else if (snapshot.hasData && snapshot.data!.isEmpty) {
                 return Center(
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -352,6 +348,10 @@ class _ReservationState extends State<Reservation> {
                     ),
                   ],
                 ));
+              } else {
+                return Center(
+                  child: Container(),
+                );
               }
             },
           ),

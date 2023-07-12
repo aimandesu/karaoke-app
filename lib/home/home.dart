@@ -49,7 +49,7 @@ class Home extends StatelessWidget {
                       borderRadius: BorderRadius.circular(
                           50.0), // Adjust the value to change the roundness
                       child: Image.network(
-                        'https://cdn.donmai.us/original/b9/0e/b90e0dc77ade614dbebbc274cb88d2bc.jpg',
+                        'https://firebasestorage.googleapis.com/v0/b/karaoke-app-79fc9.appspot.com/o/Annotation%202023-07-12%20110243.jpg?alt=media&token=7d2bf923-97b2-4841-8f91-404a4b238e5c',
                         width: size.width * 0.9,
                         height: 350.0,
                         fit: BoxFit.cover,
