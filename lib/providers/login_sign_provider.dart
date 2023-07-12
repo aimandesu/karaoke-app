@@ -121,4 +121,12 @@ class LoginSignProvider with ChangeNotifier {
     username = stringUsername.data()!["username"];
     return username;
   }
+
+  Future<List<Map<String, dynamic>>> currentUser() async {
+    return FirebaseFirestore.instance
+        .collection("user")
+        .where("uid", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((value) => value.docs.map((e) => e.data()).toList());
+  }
 }

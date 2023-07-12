@@ -114,20 +114,20 @@ class Home extends StatelessWidget {
                               ),
                             ),
                           ),
-                          // ElevatedButton(
-                          //   style: ElevatedButton.styleFrom(
-                          //     backgroundColor: Color(0xFFF4DECB),
-                          //   ),
-                          //   onPressed: () => Navigator.of(context).pushNamed(
-                          //     About.routeName,
-                          //   ),
-                          //   child: const Text(
-                          //     "About Us",
-                          //     style: TextStyle(
-                          //       color: Colors.black,
-                          //     ),
-                          //   ),
-                          // )
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xFFF4DECB),
+                            ),
+                            onPressed: () => Navigator.of(context).pushNamed(
+                              About.routeName,
+                            ),
+                            child: const Text(
+                              "Profile page",
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     )
