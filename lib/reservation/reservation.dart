@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +15,59 @@ class Reservation extends StatefulWidget {
 
 class _ReservationState extends State<Reservation> {
   String? _time;
+
+  void show(
+    String roomID,
+    String reservationID,
+    String reservedID,
+  ) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Reservation"),
+            content: Text(
+              "Delete Reservation?",
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: const Text("cancel"),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: const Text("proceed"),
+              ),
+            ],
+          );
+        }).then((value) {
+      if (value == true) {
+        // print(pax);
+        // print(reservationID);
+        // print(roomID);
+        // print(price);
+        // print(room);
+        // print(time);
+        Provider.of<BookProvider>(context, listen: false)
+            .deleteOrder(roomID.trim(), reservationID, reservedID);
+        // print(paxController);
+
+        // print(reservationID);
+        // print(roomID);
+        // print(price);
+      } else {
+        Fluttertoast.showToast(
+          msg: "deletion is cancelled",
+          toastLength: Toast.LENGTH_SHORT, // or Toast.LENGTH_LONG
+          gravity: ToastGravity.BOTTOM, // positioning of the toast
+          timeInSecForIosWeb: 1, // duration of the toast on iOS and web
+          backgroundColor: Colors.black, // background color of the toast
+          textColor: Colors.white, // text color of the toast
+          fontSize: 16.0, // font size of the toast message
+        );
+      }
+    });
+  }
 
   void _launch(
     BuildContext buildContext,
@@ -226,9 +280,7 @@ class _ReservationState extends State<Reservation> {
                                     children: [
                                       IconButton(
                                         onPressed: () {
-                                          Provider.of<BookProvider>(context,
-                                                  listen: false)
-                                              .deleteOrder(
+                                          show(
                                             snapshot.data![index]['room_id']
                                                 .toString(),
                                             snapshot.data![index]
