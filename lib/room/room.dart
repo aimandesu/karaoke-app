@@ -361,10 +361,11 @@ class Pax extends StatelessWidget {
         ),
       ),
       child: TextFormField(
+        keyboardType: TextInputType.number,
         controller: paxController,
         decoration: const InputDecoration.collapsed(
           hintStyle: TextStyle(),
-          hintText: "Pax Version",
+          hintText: "Pax ",
         ),
       ),
     );

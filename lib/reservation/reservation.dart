@@ -209,7 +209,7 @@ class _ReservationState extends State<Reservation> {
                                 borderRadius: BorderRadius.circular(20.0),
                                 color: Colors.white,
                               ),
-                              height: size.height * 0.2,
+                              height: size.height * 0.25,
                               width: size.width * 1,
                               margin: const EdgeInsets.only(
                                 top: 10,
@@ -269,6 +269,12 @@ class _ReservationState extends State<Reservation> {
                                         ),
                                         Text(
                                           "Time: ${snapshot.data![index]['time']}",
+                                          style: const TextStyle(
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                        Text(
+                                          "Facilities: ${snapshot.data![index]['facilities']}",
                                           style: const TextStyle(
                                             fontSize: 20,
                                           ),

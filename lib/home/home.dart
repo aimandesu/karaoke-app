@@ -71,7 +71,7 @@ class Home extends StatelessWidget {
                         const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text(
-                            "we are open weekly except friday from 10am to 10pm. We are waiting you there ;)",
+                            "We are open weekly except friday from 10am to 10pm. Waiting you there ;)",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 20,

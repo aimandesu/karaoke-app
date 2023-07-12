@@ -159,8 +159,7 @@ class Book extends StatelessWidget {
                                             ),
                                             child: Center(
                                               child: Text(
-                                                snapshot.data![index]['price']
-                                                    .toString(),
+                                                "RM${snapshot.data![index]['price']}",
                                                 textAlign: TextAlign.center,
                                                 // style: TextStyle(
                                                 //   color: Colors.white,
