@@ -131,6 +131,7 @@ class BookProvider with ChangeNotifier {
           .doc(reservedID)
           .update({
         'time': time,
+        'reservation_id': id,
       });
     }
   }
@@ -141,6 +142,9 @@ class BookProvider with ChangeNotifier {
     String reservedID,
   ) async {
     try {
+      // print(roomID);
+      // print(currentReservationID);
+      // print(reservedID);
       await FirebaseFirestore.instance
           .collection("room")
           .doc(roomID)
